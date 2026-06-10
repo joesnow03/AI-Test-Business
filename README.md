@@ -1,4 +1,4 @@
-# Emberline — AI Agent Business Landing Page
+# Infinity Automation Group (IAG) — AI Agent Business Landing Page
 
 A sleek, single-file landing page for an AI agent business. Dark background with warm
 orange accents. No build tools, no dependencies, no coding required.
@@ -30,8 +30,8 @@ Download `index.html` and double-click it — it opens in any web browser.
 
 Open `index.html` in any text editor and search for the text you want to change:
 
-- **Business name**: search for `Emberline` and replace it everywhere
-- **Email address**: search for `hello@emberline.ai` and replace it
+- **Business name**: search for `Infinity Automation Group` / `IAG` and replace it
+- **Email address**: search for `joe.snow03@gmail.com` and replace it
 - **Colors**: at the top of the file, in the `:root` section, change `--orange` and
   `--bg` to any color you like
 - **Testimonials, stats, FAQ answers**: the text is plain English — just edit it
