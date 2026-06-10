@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emberline — Custom AI Agents That Run With Your Business</title>
+<meta name="description" content="Emberline designs, deploys, and manages custom AI agents and automations that answer calls, capture leads, eliminate repetitive work, and support your operations 24/7.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #100c08;
+    --bg-soft: #181210;
+    --bg-card: #1f1813;
+    --bg-card-2: #261d16;
+    --line: rgba(255, 158, 88, 0.14);
+    --text: #f7f1ea;
+    --text-dim: #b8aa9c;
+    --text-faint: #8a7d70;
+    --orange: #ff8c3b;
+    --orange-soft: #ffb077;
+    --orange-deep: #e06a1b;
+    --ember: rgba(255, 140, 59, 0.12);
+    --green: #4ade80;
+    --radius: 16px;
+    --radius-lg: 24px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .serif { font-family: "Fraunces", Georgia, serif; }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Nav ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(14px);
+    background: rgba(16, 12, 8, 0.82);
+    border-bottom: 1px solid var(--line);
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .logo-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+    display: grid;
+    place-items: center;
+    font-size: 15px;
+    box-shadow: 0 0 22px rgba(255, 140, 59, 0.45);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--orange-soft); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+    color: #1a0e04;
+    box-shadow: 0 4px 24px rgba(255, 140, 59, 0.35);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(255, 140, 59, 0.5);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(255, 158, 88, 0.3);
+  }
+
+  .btn-ghost:hover { background: var(--ember); }
+
+  .btn-sm { padding: 10px 20px; font-size: 0.88rem; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    padding: 96px 0 110px;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 75% 20%, rgba(255, 140, 59, 0.13), transparent 60%),
+      radial-gradient(ellipse 50% 45% at 15% 80%, rgba(224, 106, 27, 0.08), transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--line);
+    background: var(--ember);
+    color: var(--orange-soft);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: 28px;
+  }
+
+  .pill .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--orange);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 140, 59, 0.5); }
+    50% { box-shadow: 0 0 0 6px rgba(255, 140, 59, 0); }
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 5.4vw, 4.1rem);
+    line-height: 1.06;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 26px;
+  }
+
+  h1 em {
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 600;
+    background: linear-gradient(120deg, var(--orange-soft), var(--orange));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 1.13rem;
+    color: var(--text-dim);
+    max-width: 520px;
+    margin-bottom: 38px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+
+  .hero-links {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+
+  .hero-links a {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .hero-links a:hover { color: var(--orange-soft); border-color: var(--orange-soft); }
+
+  .hero-badges {
+    display: flex;
+    gap: 36px;
+    padding-top: 30px;
+    border-top: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+
+  .hero-badge {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  .hero-badge span:first-child { color: var(--orange); font-size: 1rem; }
+
+  /* ---------- Dashboard mockup ---------- */
+  .mockup-wrap { position: relative; }
+
+  .mockup {
+    background: linear-gradient(160deg, var(--bg-card-2), var(--bg-card));
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), 0 0 60px rgba(255, 140, 59, 0.07);
+    transform: rotate(1deg);
+  }
+
+  .mockup-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
+  .live {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+  }
+
+  .live .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  .mockup-id {
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    font-family: ui-monospace, monospace;
+  }
+
+  .workflow {
+    margin-bottom: 18px;
+  }
+
+  .workflow-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--text-faint);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .workflow-bar {
+    height: 6px;
+    border-radius: 4px;
+    background: rgba(255, 158, 88, 0.12);
+    overflow: hidden;
+    margin-bottom: 7px;
+  }
+
+  .workflow-bar::after {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 68%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--orange-deep), var(--orange));
+    animation: grow 2.6s ease-out;
+  }
+
+  @keyframes grow { from { width: 8%; } to { width: 68%; } }
+
+  .workflow-steps {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--text-faint);
+  }
+
+  .feed-item {
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    background: rgba(255, 158, 88, 0.05);
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    padding: 13px 15px;
+    margin-bottom: 11px;
+  }
+
+  .feed-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: var(--ember);
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+  }
+
+  .feed-title { font-size: 0.88rem; font-weight: 600; }
+  .feed-sub { font-size: 0.78rem; color: var(--text-dim); }
+
+  .feed-check {
+    margin-left: auto;
+    color: var(--green);
+    font-size: 0.85rem;
+    align-self: center;
+  }
+
+  .mockup-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    overflow: hidden;
+    margin-top: 16px;
+  }
+
+  .mockup-stat {
+    background: var(--bg-card);
+    text-align: center;
+    padding: 14px 8px;
+  }
+
+  .mockup-stat b {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--orange-soft);
+  }
+
+  .mockup-stat span {
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    color: var(--text-faint);
+    font-weight: 600;
+  }
+
+  .float-card {
+    position: absolute;
+    background: #fdf8f3;
+    color: #2a1c10;
+    border-radius: 15px;
+    padding: 15px 19px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    animation: floaty 5s ease-in-out infinite;
+  }
+
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-9px); }
+  }
+
+  .float-agent { left: -36px; bottom: 56px; }
+  .float-week { right: -26px; top: 36px; animation-delay: 1.4s; }
+
+  .float-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.13em;
+    font-weight: 700;
+    color: #a08366;
+    margin-bottom: 3px;
+  }
+
+  .float-title { font-size: 0.95rem; font-weight: 700; }
+  .float-sub { font-size: 0.76rem; color: #7d6753; }
+
+  .float-live {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #15803d;
+    margin-top: 5px;
+  }
+
+  .float-live::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+  }
+
+  .float-week b { font-size: 1.6rem; font-weight: 800; color: var(--orange-deep); }
+
+  /* ---------- Sections ---------- */
+  section { padding: 96px 0; position: relative; }
+
+  .section-soft { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+  .section-head { max-width: 660px; margin-bottom: 60px; }
+  .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--orange);
+    margin-bottom: 18px;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 22px;
+    height: 2px;
+    background: var(--orange);
+    border-radius: 2px;
+  }
+
+  .section-head.center .eyebrow::after {
+    content: "";
+    width: 22px;
+    height: 2px;
+    background: var(--orange);
+    border-radius: 2px;
+  }
+
+  h2 {
+    font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.12;
+    margin-bottom: 18px;
+  }
+
+  h2 em {
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--orange-soft);
+  }
+
+  .section-sub { color: var(--text-dim); font-size: 1.06rem; }
+
+  /* ---------- Services ---------- */
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    transition: transform 0.22s, border-color 0.22s, box-shadow 0.22s;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 158, 88, 0.4);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35), 0 0 30px rgba(255, 140, 59, 0.08);
+  }
+
+  .card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: var(--ember);
+    border: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    margin-bottom: 22px;
+  }
+
+  .card h3 { font-size: 1.18rem; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .card p { color: var(--text-dim); font-size: 0.94rem; }
+
+  .card ul {
+    list-style: none;
+    margin-top: 16px;
+  }
+
+  .card ul li {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    padding: 5px 0 5px 22px;
+    position: relative;
+  }
+
+  .card ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+  }
+
+  /* ---------- How it works ---------- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    counter-reset: step;
+  }
+
+  .step {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 30px 26px;
+    position: relative;
+  }
+
+  .step-num {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 2.6rem;
+    font-weight: 600;
+    font-style: italic;
+    background: linear-gradient(135deg, var(--orange-soft), var(--orange-deep));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1;
+    margin-bottom: 18px;
+    display: block;
+  }
+
+  .step h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 9px; }
+  .step p { color: var(--text-dim); font-size: 0.89rem; }
+
+  /* ---------- Stats band ---------- */
+  .stats-band {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    text-align: center;
+  }
+
+  .stat-big {
+    font-size: clamp(2.2rem, 4.2vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, var(--orange-soft), var(--orange));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.1;
+  }
+
+  .stat-label { color: var(--text-dim); font-size: 0.92rem; margin-top: 8px; }
+
+  /* ---------- Use cases ---------- */
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+
+  .usecase {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 22px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .usecase:hover { border-color: rgba(255, 158, 88, 0.4); background: var(--bg-card-2); }
+
+  .usecase span { font-size: 24px; display: block; margin-bottom: 14px; }
+  .usecase h3 { font-size: 1rem; font-weight: 700; margin-bottom: 7px; }
+  .usecase p { color: var(--text-dim); font-size: 0.85rem; }
+
+  /* ---------- Testimonials ---------- */
+  .quote-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 32px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .quote-stars { color: var(--orange); letter-spacing: 3px; font-size: 0.95rem; }
+
+  .quote-text {
+    color: var(--text);
+    font-size: 0.99rem;
+    flex-grow: 1;
+  }
+
+  .quote-who { display: flex; align-items: center; gap: 13px; }
+
+  .quote-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    color: #1a0e04;
+    font-size: 0.95rem;
+  }
+
+  .quote-name { font-weight: 700; font-size: 0.92rem; }
+  .quote-role { color: var(--text-faint); font-size: 0.8rem; }
+
+  /* ---------- FAQ ---------- */
+  .faq-list { max-width: 760px; margin: 0 auto; }
+
+  details {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    margin-bottom: 13px;
+    overflow: hidden;
+  }
+
+  summary {
+    padding: 21px 26px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  summary::-webkit-details-marker { display: none; }
+
+  summary::after {
+    content: "+";
+    font-size: 1.5rem;
+    color: var(--orange);
+    flex-shrink: 0;
+    transition: transform 0.25s;
+    line-height: 1;
+  }
+
+  details[open] summary::after { transform: rotate(45deg); }
+
+  details p {
+    padding: 0 26px 22px;
+    color: var(--text-dim);
+    font-size: 0.94rem;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta-box {
+    position: relative;
+    background: linear-gradient(150deg, var(--bg-card-2), var(--bg-card));
+    border: 1px solid rgba(255, 158, 88, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 80px 40px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .cta-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 65% 90% at 50% -10%, rgba(255, 140, 59, 0.18), transparent 65%);
+    pointer-events: none;
+  }
+
+  .cta-box > * { position: relative; }
+
+  .cta-box h2 { max-width: 620px; margin-left: auto; margin-right: auto; }
+
+  .cta-box .section-sub { max-width: 520px; margin: 0 auto 36px; }
+
+  .cta-note { margin-top: 20px; color: var(--text-faint); font-size: 0.86rem; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 56px 0 36px;
+    background: var(--bg-soft);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 44px;
+  }
+
+  .footer-about p { color: var(--text-dim); font-size: 0.9rem; max-width: 300px; margin-top: 16px; }
+
+  .footer-col h4 {
+    font-size: 0.78rem;
+    letter-spacing: 0.13em;
+    color: var(--text-faint);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col li { margin-bottom: 10px; }
+
+  .footer-col a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--orange-soft); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--line);
+    padding-top: 26px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: var(--text-faint);
+    font-size: 0.84rem;
+  }
+
+  /* ---------- Reveal animation ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 70px; }
+    .grid-3, .steps { grid-template-columns: 1fr 1fr; }
+    .grid-4 { grid-template-columns: 1fr 1fr; }
+    .stats-band { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .float-agent { left: -8px; }
+    .float-week { right: -6px; }
+  }
+
+  @media (max-width: 600px) {
+    section { padding: 70px 0; }
+    .hero { padding: 64px 0 80px; }
+    .grid-3, .steps, .grid-4 { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .float-agent, .float-week { position: static; margin-top: 14px; animation: none; display: inline-block; }
+    .mockup { transform: none; }
+    .cta-box { padding: 56px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header>
+  <div class="container">
+    <nav>
+      <a href="#" class="logo"><span class="logo-mark">🔥</span>Emberline</a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#industries">Industries</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="#contact" class="btn btn-primary btn-sm">Book a Discovery Call</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="pill"><span class="dot"></span>Operational AI for modern businesses</span>
+        <h1>AI Agents That Run <em>With</em> Your Business</h1>
+        <p class="hero-sub">Emberline designs, deploys, and manages custom AI agents and automations that answer calls, capture leads, eliminate repetitive work, and support your operations 24/7 — so your team can focus on growth.</p>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn btn-primary">Book a Discovery Call →</a>
+          <a href="#services" class="btn btn-ghost">Explore Our Services</a>
+        </div>
+        <div class="hero-links">
+          <a href="#how">See how it works →</a>
+          <a href="#results">View the results →</a>
+        </div>
+        <div class="hero-badges">
+          <div class="hero-badge"><span>◆</span><span>Custom-built</span></div>
+          <div class="hero-badge"><span>◆</span><span>Fully managed</span></div>
+          <div class="hero-badge"><span>◆</span><span>Continuously improved</span></div>
+        </div>
+      </div>
+
+      <!-- Dashboard mockup -->
+      <div class="mockup-wrap">
+        <div class="mockup">
+          <div class="mockup-head">
+            <div class="live"><span class="dot"></span>SYSTEM LIVE</div>
+            <div class="mockup-id">emberline-agent-01</div>
+          </div>
+          <div class="workflow">
+            <div class="workflow-label">WORKFLOW</div>
+            <div class="workflow-bar"></div>
+            <div class="workflow-steps"><span>Inbound</span><span>Qualify</span><span>Route</span></div>
+          </div>
+          <div class="feed-item">
+            <div class="feed-icon">📞</div>
+            <div>
+              <div class="feed-title">Incoming call — Sarah K.</div>
+              <div class="feed-sub">Qualified · Booked Tue 2:30pm</div>
+            </div>
+            <span class="feed-check">✓</span>
+          </div>
+          <div class="feed-item">
+            <div class="feed-icon">💬</div>
+            <div>
+              <div class="feed-title">Website chat — new lead</div>
+              <div class="feed-sub">Captured email · Routed to sales</div>
+            </div>
+            <span class="feed-check">✓</span>
+          </div>
+          <div class="feed-item">
+            <div class="feed-icon">⚡</div>
+            <div>
+              <div class="feed-title">Invoice follow-up triggered</div>
+              <div class="feed-sub">Reminder sent · Payment link attached</div>
+            </div>
+            <span class="feed-check">✓</span>
+          </div>
+          <div class="mockup-stats">
+            <div class="mockup-stat"><b>24/24</b><span>CALLS ANSWERED</span></div>
+            <div class="mockup-stat"><b>11</b><span>LEADS CAPTURED</span></div>
+            <div class="mockup-stat"><b>6.2h</b><span>TIME SAVED</span></div>
+          </div>
+        </div>
+
+        <div class="float-card float-agent">
+          <div class="float-label">ACTIVE AGENT</div>
+          <div class="float-title">Receptionist v2</div>
+          <div class="float-sub">Trained on your business</div>
+          <div class="float-live">Live · uptime 99.9%</div>
+        </div>
+
+        <div class="float-card float-week">
+          <div class="float-label">THIS WEEK ↗</div>
+          <b>+38%</b>
+          <div class="float-sub">Response speed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services" class="section-soft">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">WHAT WE BUILD</span>
+      <h2>AI systems that handle <em>the work, end to end</em>.</h2>
+      <p class="section-sub">An AI agent takes a workflow the way a senior team member would: read the situation, decide, act, log it. Humans approve the moments that need approval. We build it into the tools you already use.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card reveal">
+        <div class="card-icon">🤖</div>
+        <h3>AI Voice &amp; Chat Agents</h3>
+        <p>Never miss a call or a lead again. Agents trained on your business answer questions, qualify prospects, and book appointments around the clock.</p>
+        <ul>
+          <li>24/7 phone reception</li>
+          <li>Website chat that converts</li>
+          <li>Calendar booking built-in</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">⚙️</div>
+        <h3>Workflow Automation</h3>
+        <p>Eliminate the repetitive work that eats your team's day — data entry, follow-ups, invoicing, reporting — with automations that just run.</p>
+        <ul>
+          <li>CRM &amp; email automation</li>
+          <li>Invoice &amp; payment follow-ups</li>
+          <li>Automatic reporting</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">📈</div>
+        <h3>Lead Generation &amp; Sales</h3>
+        <p>Turn more visitors into customers. AI-driven outreach, instant lead response, and smart routing make sure no opportunity slips through.</p>
+        <ul>
+          <li>Instant lead response</li>
+          <li>Personalized outreach at scale</li>
+          <li>Smart lead scoring &amp; routing</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">✍️</div>
+        <h3>Content &amp; Marketing AI</h3>
+        <p>Keep your brand visible without the grind. AI systems that draft, schedule, and publish content tuned to your voice and audience.</p>
+        <ul>
+          <li>Social &amp; email content engines</li>
+          <li>SEO-ready blog production</li>
+          <li>On-brand, human-approved</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🧠</div>
+        <h3>Custom AI Systems</h3>
+        <p>Have a workflow nobody else can automate? We design bespoke agents around your exact process, data, and tools — built to spec.</p>
+        <ul>
+          <li>Discovery &amp; process mapping</li>
+          <li>Built on your stack</li>
+          <li>Secure &amp; private by design</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🛡️</div>
+        <h3>Managed &amp; Monitored</h3>
+        <p>We don't hand you software and walk away. Every system is monitored, maintained, and continuously improved as your business evolves.</p>
+        <ul>
+          <li>99.9% uptime monitoring</li>
+          <li>Monthly optimization reviews</li>
+          <li>Dedicated support</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">HOW IT WORKS</span>
+      <h2>From first call to <em>live system</em> in weeks, not months.</h2>
+      <p class="section-sub">No technical knowledge required on your side. We handle everything — you just tell us how your business works.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="step-num">01</span>
+        <h3>Discovery Call</h3>
+        <p>A free 30-minute conversation about your business, your bottlenecks, and where AI can create the most value fastest.</p>
+      </div>
+      <div class="step reveal">
+        <span class="step-num">02</span>
+        <h3>Automation Audit</h3>
+        <p>We map your workflows and deliver a clear plan: what to automate, what it will save you, and what it will cost.</p>
+      </div>
+      <div class="step reveal">
+        <span class="step-num">03</span>
+        <h3>Build &amp; Launch</h3>
+        <p>Our team builds, trains, and tests your AI system on your real processes — then launches it into your day-to-day operations.</p>
+      </div>
+      <div class="step reveal">
+        <span class="step-num">04</span>
+        <h3>Manage &amp; Improve</h3>
+        <p>We monitor performance, report results monthly, and keep improving the system as your business grows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section id="results" class="section-soft">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">THE RESULTS</span>
+      <h2>Productivity up. Costs down. <em>Profit follows.</em></h2>
+      <p class="section-sub">Typical outcomes our clients see within the first 90 days of going live.</p>
+    </div>
+    <div class="stats-band">
+      <div class="reveal"><div class="stat-big">30+ hrs</div><div class="stat-label">saved per week on repetitive tasks</div></div>
+      <div class="reveal"><div class="stat-big">3×</div><div class="stat-label">faster lead response times</div></div>
+      <div class="reveal"><div class="stat-big">24/7</div><div class="stat-label">coverage — nights, weekends, holidays</div></div>
+      <div class="reveal"><div class="stat-big">40%</div><div class="stat-label">average reduction in operating costs</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INDUSTRIES ============ -->
+<section id="industries">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">WHO IT'S FOR</span>
+      <h2>Built for businesses that <em>run on their time</em>.</h2>
+      <p class="section-sub">If your team spends hours on calls, follow-ups, scheduling, or paperwork — there's an agent for that.</p>
+    </div>
+    <div class="grid-4">
+      <div class="usecase reveal"><span>🏠</span><h3>Home Services</h3><p>Answer every call, book every job — even at 9pm on a Sunday.</p></div>
+      <div class="usecase reveal"><span>🏥</span><h3>Clinics &amp; Wellness</h3><p>Automated scheduling, reminders, and patient intake that never sleeps.</p></div>
+      <div class="usecase reveal"><span>🏢</span><h3>Real Estate</h3><p>Instant lead response and showing coordination while you're at closings.</p></div>
+      <div class="usecase reveal"><span>⚖️</span><h3>Professional Services</h3><p>Client intake, document prep, and follow-ups handled automatically.</p></div>
+      <div class="usecase reveal"><span>🛒</span><h3>E-commerce</h3><p>Customer support, order updates, and recovery emails on autopilot.</p></div>
+      <div class="usecase reveal"><span>🏗️</span><h3>Contractors</h3><p>Quote requests captured and qualified before competitors call back.</p></div>
+      <div class="usecase reveal"><span>💼</span><h3>Agencies</h3><p>Reporting, onboarding, and client comms without the busywork.</p></div>
+      <div class="usecase reveal"><span>🚀</span><h3>Startups</h3><p>Operate like a 20-person team while you're still a team of 3.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section-soft">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">CLIENT STORIES</span>
+      <h2>Teams that stopped doing <em>robot work</em>.</h2>
+    </div>
+    <div class="grid-3">
+      <div class="quote-card reveal">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text">"Our AI receptionist answers every call now. We used to miss 15–20 calls a week — that's real revenue we were leaving on the table. It paid for itself in the first month."</p>
+        <div class="quote-who">
+          <div class="quote-avatar">MJ</div>
+          <div>
+            <div class="quote-name">Marcus J.</div>
+            <div class="quote-role">Owner, HVAC Services Company</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card reveal">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text">"I got 12 hours of my week back. The follow-up automations alone handle what used to be an entire part-time role — and they never forget, never get sick, never miss a beat."</p>
+        <div class="quote-who">
+          <div class="quote-avatar">SL</div>
+          <div>
+            <div class="quote-name">Sarah L.</div>
+            <div class="quote-role">Founder, Marketing Agency</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card reveal">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text">"I'm not technical at all, and that was never a problem. They mapped our whole process, built the system, and now it just runs. Best operational decision we've made."</p>
+        <div class="quote-who">
+          <div class="quote-avatar">DR</div>
+          <div>
+            <div class="quote-name">David R.</div>
+            <div class="quote-role">Managing Partner, Law Firm</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">QUESTIONS</span>
+      <h2>Everything you're <em>wondering</em>.</h2>
+    </div>
+    <div class="faq-list reveal">
+      <details>
+        <summary>Do I need any technical knowledge to work with you?</summary>
+        <p>None at all. You tell us how your business works in plain English; we handle the design, build, deployment, and ongoing management. Most of our clients have never written a line of code.</p>
+      </details>
+      <details>
+        <summary>How long does it take to get a system live?</summary>
+        <p>Most systems launch within 2–4 weeks of your discovery call. Simple voice or chat agents can go live in days; larger custom workflow systems can take longer depending on complexity.</p>
+      </details>
+      <details>
+        <summary>Will the AI sound robotic to my customers?</summary>
+        <p>No. Every agent is trained on your business — your services, your tone, your pricing, your FAQs. Customers get fast, natural, accurate answers, and anything sensitive is routed to a human.</p>
+      </details>
+      <details>
+        <summary>What happens when the AI doesn't know the answer?</summary>
+        <p>It gracefully hands off. Agents are configured with clear escalation rules — when a question is outside their scope, they collect the details and route it to the right person on your team immediately.</p>
+      </details>
+      <details>
+        <summary>Is my business data safe?</summary>
+        <p>Yes. Your data stays yours. We follow security best practices, use encrypted connections throughout, and never use your business data to train anything outside your own system.</p>
+      </details>
+      <details>
+        <summary>How much does it cost?</summary>
+        <p>Every system is custom, so pricing depends on scope. After your free discovery call and automation audit, you'll get a clear fixed proposal — what it costs, what it saves, and the expected payback period. No surprises.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section id="contact">
+  <div class="container">
+    <div class="cta-box reveal">
+      <span class="pill"><span class="dot"></span>Free, no-commitment audit</span>
+      <h2>See what AI could do for <em>your</em> business.</h2>
+      <p class="section-sub">Book a free discovery call. We'll map your workflows, show you exactly what's automatable, and what it would save you — no obligation, no jargon.</p>
+      <a href="mailto:hello@emberline.ai?subject=Discovery%20Call%20Request" class="btn btn-primary">Book Your Free Discovery Call →</a>
+      <p class="cta-note">30 minutes · No commitment · We'll map your workflows and show you what's automatable.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <a href="#" class="logo"><span class="logo-mark">🔥</span>Emberline</a>
+        <p>Custom AI agents and automations that answer calls, capture leads, eliminate repetitive work, and support your operations 24/7.</p>
+      </div>
+      <div class="footer-col">
+        <h4>SERVICES</h4>
+        <ul>
+          <li><a href="#services">Voice &amp; Chat Agents</a></li>
+          <li><a href="#services">Workflow Automation</a></li>
+          <li><a href="#services">Lead Generation</a></li>
+          <li><a href="#services">Custom AI Systems</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>COMPANY</h4>
+        <ul>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="#results">Results</a></li>
+          <li><a href="#industries">Industries</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>GET STARTED</h4>
+        <ul>
+          <li><a href="#contact">Book a Discovery Call</a></li>
+          <li><a href="mailto:hello@emberline.ai">hello@emberline.ai</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Emberline AI. All rights reserved.</span>
+      <span>Custom-built · Managed · Continuously improved</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Fade-in sections as they scroll into view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+</script>
+
+</body>
+</html>
